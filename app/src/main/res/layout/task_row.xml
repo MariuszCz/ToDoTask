@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/linear">
+
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.6"
+                    android:layout_height="wrap_content"
+                    android:text="@string/task_name_label"
+                    android:textColor="@android:color/black"
+                    android:textSize="30dp" />
+
+                <ImageButton
+                    android:id="@+id/editTaskButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:src="@android:drawable/ic_menu_edit" />
+
+                <ImageButton
+                    android:id="@+id/deleteTaskButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.2"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_input_delete" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dateTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linear"
+                android:text="@string/task_date_label"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/taskRowExtendedInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/descriptionLabelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_description_label"
+            android:textColor="@android:color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/taskCreatedAtText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_created_label"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="15dp"
+            android:layout_above="@+id/descriptionTextView"
+            android:layout_toRightOf="@+id/descriptionLabelView"
+            android:layout_toEndOf="@+id/descriptionLabelView"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="30dp" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/descriptionLabelView"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/taskCreatedAtLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/task_created_label"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="15dp"
+            android:layout_above="@+id/descriptionTextView"
+            android:layout_toRightOf="@+id/taskCreatedAtText"
+            android:layout_toEndOf="@+id/taskCreatedAtText"
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
+</LinearLayout>

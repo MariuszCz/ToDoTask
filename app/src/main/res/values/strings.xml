@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">ToDoTask</string>
+    <string name="facebook_app_id">858726710898167</string>
+    <string name="task_name_label">Name</string>
+    <string name="task_description_label">Description:</string>
+    <string name="task_created_at_label">Created at:</string>
+    <string name="task_date_label">End date:</string>
+    <string name="task_add_label">Add task</string>
+    <string name="task_edit_label">Edit task</string>
+    <string name="task_created_label">Created at:</string>
+    <string name="task_deleted_success">Task deleted</string>
+    <string name="task_added_success">Task added</string>
+    <string name="task_edited_success">Task edited</string>
+    <string name="task_fetched_success">Tasks fetched from server</string>
+    <string name="add_task_menu_label">Add Task</string>
+    <string name="positionExtra">position</string>
+    <string name="delete_message">Are you sure?</string>
+    <string name="delete_positive_button">Ok</string>
+    <string name="delete_negative_button">Nope</string>
+    <string name="task_amount_label">Amount:</string>
+    <string name="error_not_enough_information">Task has to have name and description</string>
+    <string name="email_text">E-mail</string>
+    <string name="password_text">Password</string>
+    <string name="login_button_text">Login</string>
+    <string name="register_button_text">Register</string>
+    <string name="network_not_avaliable_text">No internet connection</string>
+    <string name="server_exception_text">Problem with server. Try again later</string>
+    <string name="unauthorized_exception_text">Unauthorized. Please login or register</string>
+    <string name="register_success_text">Registration successful. You can now log in.</string>
+    <string name="date_fragment_label">Date</string>
+    <string name="delete_task_tag">Delete task</string>
+    <string name="logout_menu_label">Logout</string>
+    <string name="get_from_server_menu_label">Get from server</string>
+</resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/add_task"
+        android:title="@string/add_task_menu_label"
+        android:icon="@android:drawable/ic_input_add"
+        app:showAsAction="ifRoom"/>
+
+    <item android:id="@+id/logout"
+        android:title="@string/logout_menu_label"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/getTasksFromServer"
+        android:title="@string/get_from_server_menu_label"
+        app:showAsAction="never" />
+
+</menu>
