@@ -19,7 +19,6 @@ public class TasksDbHelper extends SQLiteOpenHelper {
                     DbConstants.TasksTable.COLUMN_CREATED_AT + " INTEGER, " +
                     DbConstants.TasksTable.COLUMN_DESCRIPTION + " TEXT," +
                     DbConstants.TasksTable.COLUMN_TASK_ID + " INTEGER," +
-                  //  DbConstants.TasksTable.COLUMN_LAST_UPDATED + " INTEGER,"+
                     DbConstants.TasksTable.COLUMN_ISOPEN + " INTEGER, ";
 
     private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + DbConstants.TasksTable.TABLE_NAME;

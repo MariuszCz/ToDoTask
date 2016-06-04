@@ -31,7 +31,6 @@ public class TasksAdapter extends BaseAdapter {
         this.facebookId = facebookId;
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View taskView = getTaskView(convertView, parent);

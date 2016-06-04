@@ -24,12 +24,10 @@ import com.example.mariusz.todotask.R;
 import com.example.mariusz.todotask.database.TaskDatabase;
 import com.example.mariusz.todotask.database.TasksProvider;
 import com.example.mariusz.todotask.exceptions.NotEnoughInformationException;
-import com.example.mariusz.todotask.exceptions.UnauthorizedException;
 import com.example.mariusz.todotask.fragments.DatePickerFragment;
 import com.example.mariusz.todotask.restManagement.ServerConnector;
 import com.facebook.FacebookSdk;
 
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -142,7 +140,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         String description = taskDescription.getText().toString();
         String endDate = taskEndDateLabel.getText().toString();
 
-        if (name.isEmpty() || endDate.isEmpty()) {
+        if (name.isEmpty() || description.isEmpty()) {
             throw new NotEnoughInformationException();
         }
 

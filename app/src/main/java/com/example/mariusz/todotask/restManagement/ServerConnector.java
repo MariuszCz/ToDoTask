@@ -1,15 +1,15 @@
 package com.example.mariusz.todotask.restManagement;
 
 import android.content.Context;
-import android.content.SharedPreferences;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.example.mariusz.todotask.Models.Task;
-import com.example.mariusz.todotask.R;
+
 import com.example.mariusz.todotask.database.TaskDatabase;
-import com.example.mariusz.todotask.exceptions.UnauthorizedException;
+
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +24,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
-;
+import java.util.Date;
 
 
 public class ServerConnector {
@@ -38,11 +35,6 @@ public class ServerConnector {
     public ServerConnector(Context context) {
         this.context = context;
     }
-
-
- /*   private HttpURLConnection tryToOpenConnectionAndReturnIt(String serverUrl, String method)throws IOException{
-        return tryToOpenConnectionAndReturnIt(serverUrl, method, true, true);
-    }*/
 
     private HttpURLConnection tryToOpenConnectionAndReturnIt(String serverUrl, String method, boolean doInput, boolean doOutput)
             throws IOException {
@@ -66,12 +58,6 @@ public class ServerConnector {
         }
         return total.toString();
     }
-
- /*   private JSONObject parseStringToJsonObject(String json) throws JSONException {
-        JSONObject jsonObject = new JSONObject(json);
-        return jsonObject;
-    }*/
-
 
     public JSONArray downloadAllTasks(String facebookId) throws IOException, JSONException{
         Log.d("fid",facebookId);
@@ -124,22 +110,6 @@ public class ServerConnector {
         JSONObject jsonObjectForTask = createJsonObjectForTaskUpdate(task);
         sendJsonRequest(jsonObjectForTask, connection);
     }
-
-
-/*
-    private List<Task> getTasksFromJsonArray(JSONArray tasks) {
-        List<Task> task = new ArrayList<>();
-        for (int i=0;i<tasks.length();i++) {
-            try {
-                task.add(parseJsonObjectToTask(tasks.getJSONObject(i)));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return task;
-    }
-
-*/
 
     public void addTaskToServer(Task task) throws IOException {
         HttpURLConnection connection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks", "POST", true, true);

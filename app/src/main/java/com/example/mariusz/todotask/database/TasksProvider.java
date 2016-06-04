@@ -8,7 +8,6 @@ import com.example.mariusz.todotask.Models.Task;
 public interface TasksProvider {
     int getTasksNumber();
     long addTaskAndReturnItsId(Task task);
- //   Task getTaskById(String id);
     Task getTaskByPosition(int position);
     void deleteTaskByItsId(long id);
     void deleteAllTasks();

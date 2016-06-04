@@ -96,8 +96,6 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
         startActivity(i);
     }
 
-
-
     private void getTasksFromServer() {
         adapter.deleteAllTasks();
         ConnectionAdd connection = new ConnectionAdd(this);
