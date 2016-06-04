@@ -40,9 +40,9 @@ public class ServerConnector {
     }
 
 
-    private HttpURLConnection tryToOpenConnectionAndReturnIt(String serverUrl, String method)throws IOException{
+ /*   private HttpURLConnection tryToOpenConnectionAndReturnIt(String serverUrl, String method)throws IOException{
         return tryToOpenConnectionAndReturnIt(serverUrl, method, true, true);
-    }
+    }*/
 
     private HttpURLConnection tryToOpenConnectionAndReturnIt(String serverUrl, String method, boolean doInput, boolean doOutput)
             throws IOException {
@@ -67,21 +67,22 @@ public class ServerConnector {
         return total.toString();
     }
 
-    private JSONObject parseStringToJsonObject(String json) throws JSONException {
+ /*   private JSONObject parseStringToJsonObject(String json) throws JSONException {
         JSONObject jsonObject = new JSONObject(json);
         return jsonObject;
-    }
+    }*/
 
 
-    public JSONArray downloadAllTasks() throws IOException, JSONException{
-        HttpURLConnection urlConnection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks", "GET", true, false);
+    public JSONArray downloadAllTasks(String facebookId) throws IOException, JSONException{
+        Log.d("fid",facebookId);
+        HttpURLConnection urlConnection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks/" + facebookId, "GET", true, false);
         Log.d("status", Integer.toString(urlConnection.getResponseCode()));
         Log.d("error", urlConnection.getResponseMessage());
-        Log.d("url", serverBaseUrl + "/tasks");
-
+        Log.d("url", serverBaseUrl + "/tasks/facebookId");
 
         String inputString = readStream(urlConnection.getInputStream());
         JSONArray tasks = parseStringToJsonArray(inputString);
+
         return tasks;
     }
 
@@ -92,7 +93,7 @@ public class ServerConnector {
 
 
 
-    public void deleteTaskFromServer(long serverTaskId) throws IOException{
+    public void deleteTaskFromServer(String serverTaskId) throws IOException{
         HttpURLConnection connection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks/" + serverTaskId, "DELETE", false, true);
         connection.getResponseCode();
     }
@@ -100,13 +101,12 @@ public class ServerConnector {
 
     private Task parseJsonObjectToTask(JSONObject tasks) throws JSONException{
         Task task = new Task();
-        task.setId(tasks.getLong("taskId"));
+        task.setTaskId(tasks.getString("taskId"));
         task.setFacebookId(tasks.getString("facebookId"));
         task.setName(tasks.getString("name"));
         task.setDescription(tasks.getString("description"));
         task.setEndDate(parseDate(tasks.getString("endDate")));
         task.setCreatedAt(parseDate(tasks.getString("createdAt")));
-        task.setDeleted(tasks.getBoolean("deleted"));
         return task;
     }
 
@@ -120,13 +120,13 @@ public class ServerConnector {
     }
 
     public void updateTaskOnServer(Task task) throws IOException {
-        HttpURLConnection connection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks/"+task.getId(), "PUT", false, true);
-        JSONObject jsonObjectForTask = createJsonObjectForTask(task);
+        HttpURLConnection connection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks/"+task.getTaskId(), "PUT", false, true);
+        JSONObject jsonObjectForTask = createJsonObjectForTaskUpdate(task);
         sendJsonRequest(jsonObjectForTask, connection);
     }
 
 
-
+/*
     private List<Task> getTasksFromJsonArray(JSONArray tasks) {
         List<Task> task = new ArrayList<>();
         for (int i=0;i<tasks.length();i++) {
@@ -139,7 +139,7 @@ public class ServerConnector {
         return task;
     }
 
-
+*/
 
     public void addTaskToServer(Task task) throws IOException {
         HttpURLConnection connection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks", "POST", true, true);
@@ -152,7 +152,7 @@ public class ServerConnector {
         for (int i=0; i<tasks.length();i++) {
             JSONObject task = tasks.getJSONObject(i);
             Task serverTask = parseJsonObjectToTask(task);
-                db.addTaskAndReturnItsId(serverTask);
+                db.addTaskFromServer(serverTask);
         }
     }
 
@@ -165,7 +165,21 @@ public class ServerConnector {
             credentials.put("description", task.getDescription());
             credentials.put("endDate",  new SimpleDateFormat("dd-MM-yyyy").format(task.getEndDate()));
             credentials.put("createdAt", new SimpleDateFormat("dd-MM-yyyy").format(task.getCreatedAt()));
-            credentials.put("deleted", task.isDeleted());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return credentials;
+    }
+
+    private JSONObject createJsonObjectForTaskUpdate(Task task) {
+        JSONObject credentials = new JSONObject();
+        try {
+            credentials.put("taskId", task.getTaskId());
+            credentials.put("facebookId", task.getFacebookId());
+            credentials.put("name", task.getName());
+            credentials.put("description", task.getDescription());
+            credentials.put("endDate",  new SimpleDateFormat("dd-MM-yyyy").format(task.getEndDate()));
+            credentials.put("createdAt", new SimpleDateFormat("dd-MM-yyyy").format(task.getCreatedAt()));
         } catch (JSONException e) {
             e.printStackTrace();
         }

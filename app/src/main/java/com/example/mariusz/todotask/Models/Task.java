@@ -14,9 +14,10 @@ public class Task {
     private boolean isOpen;
     private boolean deleted = false;
     private String facebookId;
+    private String taskId;
 
     public Task() {}
-    public Task(String name, Date endDate, Date createdAt, String description, String facebookId) {
+    public Task(String name, Date endDate, Date createdAt, String description, String facebookId, String taskId) {
         super();
         this.name = name;
         this.endDate = endDate;
@@ -24,6 +25,15 @@ public class Task {
         this.description = description;
         this.isOpen = false;
         this.facebookId = facebookId;
+        this.taskId = taskId;
+    }
+
+    public String getTaskId() {
+        return taskId;
+    }
+
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
     }
 
     public long getId() {

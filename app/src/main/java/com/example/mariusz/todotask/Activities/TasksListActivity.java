@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -75,7 +74,7 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
                 return true;
             }
             case R.id.getTasksFromServer: {
-                getTasksFromServer();
+                    getTasksFromServer();
                 return true;
             }
             default: {
@@ -97,11 +96,12 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
         startActivity(i);
     }
 
+
+
     private void getTasksFromServer() {
         adapter.deleteAllTasks();
         ConnectionAdd connection = new ConnectionAdd(this);
         connection.execute();
-
     }
 
     private void initializeList() {
@@ -143,23 +143,23 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
 
     @Override
     public void positiveDelete(int position) {
-        long id = adapter.getItemId(position);
+        Task task = adapter.getItem(position);
         adapter.deleteTaskByPosition(position);
-        tryDeleteTaskFromServer(id);
+        tryDeleteTaskFromServer(task.getTaskId());
         Toast.makeText(this, getString(R.string.task_deleted_success), Toast.LENGTH_SHORT).show();
         adapter.notifyDataSetChanged();
     }
 
-    private void tryDeleteTaskFromServer(long position) {
+    private void tryDeleteTaskFromServer(String position) {
         ConnectionDelete connection = new ConnectionDelete(this,position);
         connection.execute();
     }
     private class ConnectionDelete extends AsyncTask {
         Context context;
         Handler handler;
-        long position;
+        String position;
 
-        public ConnectionDelete(Context context, long position) {
+        public ConnectionDelete(Context context, String position) {
             this.context = context;
             handler =  new Handler(context.getMainLooper());
             this.position = position;
@@ -230,7 +230,7 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
         protected Object doInBackground(Object[] params) {
             ServerConnector connector = new ServerConnector(context);
             try {
-                connector.addTasksFromServer(connector.downloadAllTasks());
+                connector.addTasksFromServer(connector.downloadAllTasks(user.getFacebookID()));
                 handler.post(new Runnable() {
                     public void run() {
                         Toast.makeText(context, R.string.task_fetched_success, Toast.LENGTH_SHORT).show();
@@ -249,10 +249,10 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
 
             return null;
         }
+
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
-
             ((TasksListActivity) context).notifyDataSetChanged();
         }
 }

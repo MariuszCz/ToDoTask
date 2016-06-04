@@ -61,7 +61,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
     private void setupViews() {
         taskName = (EditText) findViewById(R.id.taskNameEditText);
         taskDescription = (EditText) findViewById(R.id.taskDescriptionEditText);
-    //    taskCreatedAtLabel = (TextView) findViewById(R.id.taskCreatedAtLabel);
         taskEndDateLabel = (TextView) findViewById(R.id.taskEndDateLabel);
         dateButton = (ImageButton) findViewById(R.id.calendarDateButton);
         dateButton.setOnClickListener(this);
@@ -89,7 +88,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    private void addTask() throws NotEnoughInformationException{
+    private void addTask() throws NotEnoughInformationException {
         Task task = createAndReturnTask();
         TasksProvider db = new TaskDatabase(this, user.getFacebookID());
         db.addTaskAndReturnItsId(task);
@@ -151,7 +150,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
         task.setDescription(description);
         task.setEndDate(dateSelected);
         task.setCreatedAt(new Date());
-       // task.setLastUpdated(new Date().getTime());
         task.setFacebookId(user.getFacebookID());
         return task;
     }
