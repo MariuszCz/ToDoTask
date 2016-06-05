@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         private TextView btnLogin;
         private ProgressDialog progressDialog;
         User user;
-
+        private static final String TAG = LoginActivity.class.getSimpleName();
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                                     PrefUtils.setCurrentUser(user,LoginActivity.this);
 
                                 }catch (Exception e){
-                                    e.printStackTrace();
+                                    Log.e(TAG, "Exception while fetching facebook data", e);
                                 }
                                 Toast.makeText(LoginActivity.this,"welcome "+user.getName(), Toast.LENGTH_LONG).show();
                                 Intent intent=new Intent(LoginActivity.this,TasksListActivity.class);

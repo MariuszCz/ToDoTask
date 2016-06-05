@@ -31,6 +31,7 @@ import java.util.Date;
 public class ServerConnector {
     private static final String serverBaseUrl = "http://192.168.1.101:8080/api";
     private Context context;
+    private static final String TAG = ServerConnector.class.getSimpleName();
 
     public ServerConnector(Context context) {
         this.context = context;
@@ -60,7 +61,6 @@ public class ServerConnector {
     }
 
     public JSONArray downloadAllTasks(String facebookId) throws IOException, JSONException{
-        Log.d("fid",facebookId);
         HttpURLConnection urlConnection = tryToOpenConnectionAndReturnIt(serverBaseUrl + "/tasks/" + facebookId, "GET", true, false);
         Log.d("status", Integer.toString(urlConnection.getResponseCode()));
         Log.d("error", urlConnection.getResponseMessage());
@@ -136,7 +136,7 @@ public class ServerConnector {
             credentials.put("endDate",  new SimpleDateFormat("dd-MM-yyyy").format(task.getEndDate()));
             credentials.put("createdAt", new SimpleDateFormat("dd-MM-yyyy").format(task.getCreatedAt()));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "JSONException while parsing json for add task", e);
         }
         return credentials;
     }
@@ -151,7 +151,7 @@ public class ServerConnector {
             credentials.put("endDate",  new SimpleDateFormat("dd-MM-yyyy").format(task.getEndDate()));
             credentials.put("createdAt", new SimpleDateFormat("dd-MM-yyyy").format(task.getCreatedAt()));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "JSONException while parsing json for update task", e);
         }
         return credentials;
     }

@@ -12,7 +12,6 @@ public class Task {
     private Date createdAt;
     private String description;
     private boolean isOpen;
-    private boolean deleted = false;
     private String facebookId;
     private String taskId;
 
@@ -82,14 +81,6 @@ public class Task {
 
     public void setOpen(boolean open) {
         isOpen = open;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
     }
 
     public String getFacebookId() {

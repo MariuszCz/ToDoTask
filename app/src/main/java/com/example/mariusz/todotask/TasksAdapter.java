@@ -27,7 +27,7 @@ public class TasksAdapter extends BaseAdapter {
 
     public TasksAdapter(Context context, String facebookId) {
         this.context = context;
-        taskDatabase = new TaskDatabase(context,facebookId);
+        taskDatabase = new TaskDatabase(context);
         this.facebookId = facebookId;
     }
 

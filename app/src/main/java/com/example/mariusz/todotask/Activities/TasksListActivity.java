@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
     private ImageView profileImage;
     private TextView username;
     Bitmap bitmap;
+    private static final String TAG = TasksListActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,6 +181,7 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
                         Toast.makeText(context, R.string.server_exception_text, Toast.LENGTH_SHORT).show();
                     }
                 });
+                Log.e(TAG, "IOException while deleting tasks", e);
 
             }
             return null;
@@ -202,7 +205,7 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
                     bitmap  = BitmapFactory.decodeStream(imageURL.openConnection().getInputStream());
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(TAG, "IOException while fetching image", e);
                 }
                 return null;
             }
@@ -240,11 +243,8 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
                         Toast.makeText(context, R.string.server_exception_text, Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
+                Log.e(TAG, "IOException while fetching tasks", e);
             }
-
-
             return null;
         }
 
@@ -253,6 +253,5 @@ public class TasksListActivity extends AppCompatActivity implements TasksAdapter
             super.onPostExecute(o);
             ((TasksListActivity) context).notifyDataSetChanged();
         }
-}
-
+    }
 }

@@ -5,13 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
-
 import com.example.mariusz.todotask.Models.Task;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -19,12 +14,6 @@ import java.util.Date;
  */
 public class TaskDatabase implements TasksProvider {
     private TasksDbHelper dbHelper;
-    private String facebookId;
-
-    public TaskDatabase(Context context, String facebookId) {
-        this.dbHelper = new TasksDbHelper(context);
-        this.facebookId = facebookId;
-    }
 
     public TaskDatabase(Context context) {
         this.dbHelper = new TasksDbHelper(context);
@@ -93,24 +82,9 @@ public class TaskDatabase implements TasksProvider {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String[] tables = DbConstants.TasksTable.allTables;
         Cursor cursor = db.query(DbConstants.TasksTable.TABLE_NAME, tables, null, null, null, null, null);
-     //   cursor = moveToPositionWorkingWithFacebook(position, cursor);
         cursor.moveToPosition(position);
         return cursor;
     }
-
-/*
-    private Cursor moveToPositionWorkingWithFacebook(int position, Cursor cursor) {
-        cursor.moveToFirst();
-        int it = -1;
-        while (true) {
-            if (cursor.getString(cursor.getColumnIndexOrThrow(DbConstants.TasksTable.COLUMN_FACEBOOK_ID)).equals(facebookId)) {
-                it++;
-            }   if(it == position) {
-                return cursor;
-            }
-            cursor.moveToNext();
-        }
-    }*/
 
     public void deleteTaskByItsId(long id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();

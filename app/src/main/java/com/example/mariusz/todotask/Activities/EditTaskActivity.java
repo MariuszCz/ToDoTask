@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,15 +47,16 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
     private Task task;
     private User user;
     private TasksProvider db;
-
+    private static final String TAG = EditTaskActivity.class.getSimpleName();
     private int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_task);
         FacebookSdk.sdkInitialize(getApplicationContext());
         user= PrefUtils.getCurrentUser(EditTaskActivity.this);
-        db = new TaskDatabase(this, user.getFacebookID());
+        db = new TaskDatabase(this);
         Bundle extras = getIntent().getExtras();
         position = extras.getInt(getString(R.string.positionExtra));
         setupViews();
@@ -145,7 +147,7 @@ public class EditTaskActivity extends AppCompatActivity implements View.OnClickL
                         Toast.makeText(context, R.string.server_exception_text, Toast.LENGTH_SHORT).show();
                     }
                 });
-
+                Log.e(TAG, "IOException while updating task", e);
             }
             return null;
         }

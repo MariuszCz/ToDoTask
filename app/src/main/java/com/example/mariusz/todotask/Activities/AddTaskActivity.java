@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,12 +40,12 @@ import java.util.Date;
 public class AddTaskActivity extends AppCompatActivity implements View.OnClickListener, DatePickerFragment.OnDateSelectedListener{
     private EditText taskName;
     private EditText taskDescription;
-  //  private TextView taskCreatedAtLabel;
     private TextView taskEndDateLabel;
     private User user;
     private ImageButton dateButton;
     private Button addTaskButton;
     private Date dateSelected = new Date();
+    private static final String TAG = AddTaskActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +89,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
     private void addTask() throws NotEnoughInformationException {
         Task task = createAndReturnTask();
-        TasksProvider db = new TaskDatabase(this, user.getFacebookID());
+        TasksProvider db = new TaskDatabase(this);
         db.addTaskAndReturnItsId(task);
         addTaskToServer(task);
         Toast.makeText(this, getString(R.string.task_added_success), Toast.LENGTH_SHORT).show();
@@ -127,7 +128,7 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
                             Toast.makeText(context, R.string.server_exception_text, Toast.LENGTH_SHORT).show();
                         }
                     });
-
+                    Log.e(TAG, "IOException while adding task", e);
                 }
                 return null;
             }
@@ -138,7 +139,6 @@ public class AddTaskActivity extends AppCompatActivity implements View.OnClickLi
 
         String name = taskName.getText().toString();
         String description = taskDescription.getText().toString();
-        String endDate = taskEndDateLabel.getText().toString();
 
         if (name.isEmpty() || description.isEmpty()) {
             throw new NotEnoughInformationException();
